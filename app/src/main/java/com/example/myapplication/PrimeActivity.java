@@ -111,7 +111,22 @@ public class PrimeActivity extends AppCompatActivity {
         outState.putBoolean("IsSearching", isSearching); // Save the isSearching state
     }
 
-
+    public void onBackPressed() {
+        if (isSearching) {
+            // Confirm with the user if they want to terminate the search
+            new AlertDialog.Builder(this)
+                    .setTitle("Terminate Search")
+                    .setMessage("Are you sure you want to stop searching for prime numbers?")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        terminateSearch();
+                        PrimeActivity.super.onBackPressed();
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     @Override
     protected void onDestroy() {
